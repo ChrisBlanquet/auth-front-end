@@ -1,0 +1,44 @@
+/* El contenedor flotante */
+.toastWrapper {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    background-color: white;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 10000;
+    /* La animación para que entre desde la derecha (150% fuera de la pantalla) */
+    transform: translateX(150%);
+    /* Transición con un efecto "bouncy" (rebote suave) */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+
+/* La clase que le agregamos para que entre a la pantalla */
+.visible {
+    transform: translateX(0);
+}
+
+/* Colores según el tipo de mensaje (Borde lateral izquierdo) */
+.toastWrapper.success { border-left: 6px solid #28a745; }
+.toastWrapper.error { border-left: 6px solid #dc3545; }
+.toastWrapper.info { border-left: 6px solid #17a2b8; }
+.toastWrapper.warning { border-left: 6px solid #ffc107; }
+
+/* Colores de los iconos */
+.icon { font-size: 1.5rem; }
+.icon.success { color: #28a745; }
+.icon.error { color: #dc3545; }
+.icon.info { color: #17a2b8; }
+.icon.warning { color: #ffc107; }
+
+.message {
+    color: #333;
+    font-weight: 500;
+    margin: 0;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+}

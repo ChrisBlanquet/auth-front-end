@@ -1,0 +1,14 @@
+.layoutContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+    overflow-x: hidden; 
+    overflow-y: auto;
+}
+
+.mainContent {
+    flex-grow: 1;
+    background-color: #f8fafc;
+    width: 100%;
+    overflow-x: hidden;
+}

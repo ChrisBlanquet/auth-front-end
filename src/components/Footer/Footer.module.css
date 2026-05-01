@@ -1,0 +1,134 @@
+/* Footer.module.css */
+
+.footerContainer {
+    background-color: #0f172a; /* Azul marino/pizarra oscuro */
+    color: #ffffff;
+    padding: 3rem 0 1.5rem 0;
+    border-top: 4px solid #f59e0b; /* Borde superior color ámbar/dorado */
+    width: 100%;
+}
+
+.contentWrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.logoContainer {
+    background-color: #ffffff;
+    padding: 0.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: inline-block;
+    align-self: flex-start;
+}
+
+.logo {
+    height: 60px;
+    object-fit: contain;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.025em;
+    margin: 0 0 0.75rem 0;
+}
+
+.description {
+    color: #94a3b8; /* Gris claro */
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    color: #f59e0b; /* Dorado institucional */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.infoItem {
+    display: flex;
+    align-items: flex-start;
+    color: #cbd5e1;
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+}
+
+.icon {
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.infoItem p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.infoItem strong {
+    color: #ffffff;
+}
+
+.bottomBar {
+    border-top: 1px solid #334155;
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.copyright {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin: 0;
+    text-align: center;
+}
+
+.links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.links a {
+    color: #94a3b8;
+    font-size: 0.75rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.links a:hover {
+    color: #fbd38d; /* Dorado claro al pasar el mouse */
+}
+
+/* Responsivo para móviles */
+@media (max-width: 768px) {
+    .column {
+        align-items: center;
+        text-align: center;
+    }
+    .logoContainer {
+        align-self: center;
+    }
+    .bottomBar {
+        flex-direction: column;
+        text-align: center;
+    }
+}

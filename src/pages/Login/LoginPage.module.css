@@ -1,0 +1,358 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+    width: 100%;
+    height: 100vh; 
+    background-color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+}
+
+.topHeader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 25px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 1000;
+    pointer-events: none; /* Permite dar click "a través" de ellos si es necesario */
+}
+
+.logoHeader {
+    height: 70px;
+    object-fit: contain;
+}
+
+/* Contenedor principal de la animación */
+.mainWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Paneles de Formulario */
+.formContainer {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+    box-shadow: 0 4px 50px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+}
+
+.title {
+    color: #3b3b8c;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #888;
+    font-size: 1rem;
+    margin-bottom: 30px;
+}
+
+/* Inputs Modernos */
+.inputGroup {
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.inputGroup input {
+    width: 100%;
+    padding: 16px 20px;
+    background-color: #f8f9fa;
+    border: 1.5px solid #e9ecef;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    color: #333;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.inputGroup input::placeholder {
+    color: #adb5bd;
+}
+
+.inputGroup input:focus {
+    border-color: #3b3b8c;
+    background-color: #ffffff;
+    box-shadow: 0 4px 15px rgba(59, 59, 140, 0.1);
+}
+
+.eyeIcon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #adb5bd;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+.eyeIcon:hover {
+    color: #3b3b8c;
+}
+
+/* Opciones debajo del Login */
+.formOptions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    font-size: 0.85rem;
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #555;
+    cursor: pointer;
+}
+
+.forgotPassword {
+    color: #3b3b8c;
+    font-weight: 500;
+    text-decoration: none;
+    transition: text-decoration 0.3s;
+}
+
+.forgotPassword:hover {
+    text-decoration: underline;
+}
+
+/* Botón Principal */
+.btnPrimary {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background-color: #3b3b8c;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(59, 59, 140, 0.2);
+}
+
+.btnPrimary:hover {
+    background-color: #2a2a6b;
+    transform: translateY(-2px);
+}
+
+.btnPrimary:active {
+    transform: translateY(0);
+}
+
+.switchText {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.linkText {
+    color: #3b3b8c;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.linkText:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   NUEVO LOGO INFERIOR ANIMADO
+   ========================================= */
+
+.logoInferiorAnimado {
+    position: absolute;
+    bottom: -405px; /* Lo bajamos un poco para que se vea cortado */
+    left: -250px; /* Escondemos la mitad a la izquierda */
+    width: 600px; /* Ajusta este tamaño según qué tan grande sea tu imagen */
+    opacity: 0.6; /* Un poco transparente para que no quite atención */
+    z-index: 0;
+    pointer-events: none;
+    transition: all 0.6s ease-in-out;
+}
+
+/* Cuando está activo el registro, se mueve a la derecha */
+.logoInferiorDerecha {
+    left: 100%;
+    transform: translateX(calc(-100% + 250px)); /* Lo manda a la derecha y lo corta un poco */
+}
+
+/* =========================================
+   ANIMACIÓN PANTALLA COMPLETA
+   ========================================= */
+
+/* Login ocupa la mitad izquierda */
+.loginContainer {
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+/* Registro oculto en la izquierda */
+.registerContainer {
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+/* Contenedor de la foto ocupa la mitad derecha */
+.overlayContainer {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 10;
+}
+
+/* La foto mide el 100% de la pantalla (200% de su contenedor) */
+.overlay {
+    position: absolute;
+    top: -5%; /* Hacemos la imagen ligeramente más grande para que el blur no deje bordes blancos */
+    left: -105%;
+    width: 210%;
+    height: 110%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(2px); 
+    transition: transform 0.6s ease-in-out;
+}
+
+/* Capa semitransparente para que la foto se vea más elegante */
+.overlayShadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Un overlay con el color morado institucional pero con mucha transparencia */
+    background-color: rgba(191, 191, 191, 0.516); 
+}
+
+/* --- ESTADOS ACTIVOS --- */
+.mainWrapper.rightPanelActive .loginContainer {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.mainWrapper.rightPanelActive .registerContainer {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: showForm 0.6s;
+}
+
+.mainWrapper.rightPanelActive .overlayContainer {
+    transform: translateX(-100%);
+}
+
+.mainWrapper.rightPanelActive .overlay {
+    transform: translateX(50%);
+}
+
+@keyframes showForm {
+    0%, 49.99% { opacity: 0; z-index: 1; }
+    50%, 100% { opacity: 1; z-index: 5; }
+}
+/* =========================================
+   DISEÑO RESPONSIVO (MÓVILES Y TABLETS)
+   ========================================= */
+
+@media (max-width: 768px) {
+    /* 1. Ajustamos los logos de arriba para que quepan */
+    .topHeader {
+        padding: 15px 20px;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        position: relative; /* Deja de flotar y ocupa su propio espacio */
+    }
+
+    .logoHeader {
+        height: 50px;
+    }
+
+    /* 2. Ocultamos la imagen gigante para no estorbar en el celular */
+    .overlayContainer {
+        display: none;
+    }
+
+    /* 3. Los formularios ahora ocupan toda la pantalla (100%) */
+    .loginContainer, .registerContainer {
+        width: 100%;
+        left: 0;
+        padding: 20px;
+    }
+
+    /* 4. Cambiamos la animación para que ya no "deslicen" horizontalmente, 
+          sino que solo aparezcan y desaparezcan elegantemente */
+    .mainWrapper.rightPanelActive .loginContainer {
+        transform: translateX(0);
+        opacity: 0;
+        z-index: 1;
+    }
+
+    .mainWrapper.rightPanelActive .registerContainer {
+        transform: translateX(0);
+        opacity: 1;
+        z-index: 5;
+    }
+
+    /* 5. Hacemos el logo del fondo más pequeño para que no se salga de la pantalla */
+    .logoInferiorAnimado {
+        width: 300px;
+        bottom: -100px;
+        left: -100px;
+    }
+}

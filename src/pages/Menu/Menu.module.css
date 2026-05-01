@@ -1,0 +1,151 @@
+/* Contenedor principal del Dashboard */
+.dashboardContainer {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    animation: fadeIn 0.4s ease-out;
+}
+
+/* Tarjeta principal de bienvenida - AHORA CENTRA TODO */
+.welcomeCard {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-top: 5px solid #f59e0b; /* Color ámbar/dorado institucional */
+    
+    /* Centrado con Flexbox */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Títulos y textos */
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a; /* Slate 900 */
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #64748b; /* Slate 500 */
+    margin-bottom: 2.5rem;
+    line-height: 1.5;
+    max-width: 600px; /* Para que el texto no se estire demasiado a los lados */
+}
+
+.subtitle strong {
+    color: #0f172a;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    background-color: #f1f5f9;
+    border-radius: 6px;
+    font-size: 0.95em;
+}
+
+/* Cuadrícula de botones de acción - CENTRADA */
+.actionGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 1rem;
+}
+
+/* Tarjetas/Botones individuales */
+.actionCard {
+    background-color: #f8fafc; /* Slate 50 */
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    /* Tamaño fijo y centrado interior */
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Efecto Hover (al pasar el mouse) */
+.actionCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-color: #cbd5e1;
+}
+
+/* Iconos dentro de las tarjetas */
+.cardIcon {
+    font-size: 2.5rem;
+    color: #f59e0b; /* Ámbar */
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.actionCard:hover .cardIcon {
+    transform: scale(1.1);
+    color: #d97706; /* Ámbar más oscuro al hacer hover */
+}
+
+/* Títulos y textos de las tarjetas */
+.actionCard h3 {
+    font-size: 1.25rem;
+    color: #1e293b;
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+}
+
+.actionCard p {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.permisosList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0.5rem 0 0 0;
+}
+
+/* Animación de entrada suave */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividad para celulares */
+@media (max-width: 768px) {
+    .dashboardContainer {
+        padding: 1rem;
+    }
+    
+    .welcomeCard {
+        padding: 1.5rem;
+    }
+    
+    .title {
+        font-size: 1.5rem;
+    }
+    
+    .actionCard {
+        width: 100%; /* En celular ocupan todo el ancho disponible */
+        max-width: 320px;
+    }
+}

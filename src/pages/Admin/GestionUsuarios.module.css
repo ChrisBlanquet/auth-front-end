@@ -1,0 +1,217 @@
+/* GestionUsuarios.module.css */
+
+.container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.headerTitle {
+    margin: 0;
+    color: #0f172a;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* TOOLBAR Y FILTROS */
+.toolbar {
+    background: #ffffff;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.select, .input {
+    padding: 9px 14px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    outline: none;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    color: #334155;
+}
+
+.select:focus, .input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.btnPrimary {
+    background: #0f172a;
+    color: white;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btnPrimary:hover { background: #334155; transform: translateY(-1px); }
+
+/* TABLA MODERNA TIPO ENTERPRISE */
+.tableContainer {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    background: #f8fafc;
+    padding: 1rem 1.5rem;
+    color: #64748b;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+}
+
+.tableRow {
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.2s;
+}
+
+.tableRow:hover { background: #f8fafc; }
+.table td { padding: 1rem 1.5rem; vertical-align: middle; }
+
+/* COMPONENTE AVATAR Y USUARIO */
+.userCell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.userInfo { display: flex; flex-direction: column; }
+.userName { font-weight: 600; color: #0f172a; font-size: 0.95rem; }
+.userId { font-size: 0.8rem; color: #94a3b8; }
+
+/* CONTACTO CELL */
+.contactCell { display: flex; flex-direction: column; gap: 2px; }
+.contactText { font-size: 0.85rem; color: #475569; display: flex; align-items: center; gap: 6px;}
+
+/* BADGES */
+.badgeRol {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+.rol-ADMIN { background: #fef08a; color: #854d0e; } /* Gold/Platino style */
+.rol-EMPLEADO { background: #e2e8f0; color: #475569; } /* Silver style */
+.rol-CIUDADANO { background: #e0f2fe; color: #0369a1; } /* Blue style */
+
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+.statusActive { color: #059669; }
+.statusInactive { color: #dc2626; }
+.dot { width: 8px; height: 8px; border-radius: 50%; }
+.dotActive { background: #10b981; box-shadow: 0 0 0 3px #d1fae5; }
+.dotInactive { background: #ef4444; box-shadow: 0 0 0 3px #fee2e2; }
+
+/* BOTÓN DE MENÚ / ACCIONES */
+.btnIcon {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+.btnIcon:hover { background: #f1f5f9; color: #0f172a; }
+
+/* MODAL MODERNO */
+.modalOverlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s;
+}
+
+.modalContent {
+    background: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    animation: slideUp 0.3s ease-out;
+}
+
+.modalHeader {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.modalHeader h3 { margin: 0; color: #0f172a; font-size: 1.25rem; font-weight: 600;}
+
+.modalBody { padding: 1.5rem; }
+.formGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.formGroup { display: flex; flex-direction: column; gap: 6px; }
+.formGroup.full { grid-column: span 2; }
+.formGroup label { font-size: 0.85rem; font-weight: 600; color: #475569; }
+
+.modalActions {
+    padding: 1rem 1.5rem;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btnCancel {
+    background: white; color: #475569; border: 1px solid #cbd5e1;
+    padding: 9px 18px; border-radius: 8px; cursor: pointer; font-weight: 500;
+}
+.btnCancel:hover { background: #f1f5f9; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
