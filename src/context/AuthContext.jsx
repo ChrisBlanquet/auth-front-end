@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
         };
 
         // FLUJO DE ARRANQUE AL ABRIR PESTAÑA O DAR F5
-        // Primero gritamos: "¿Alguien más tiene la sesión abierta?"
+        //"¿Alguien más tiene la sesión abierta?"
         channel.postMessage({ type: 'ALGUIEN_TIENE_EL_TOKEN' });
 
 
@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }) => {
             channel.close();
             clearTimeout(timeout);
         };
-    }, [isAuthenticated]);
+    }, []);
 
     // --- FUNCIONES INTERNAS ---
 

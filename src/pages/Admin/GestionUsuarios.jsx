@@ -5,7 +5,7 @@ import {
     buscarUsuarioPorEmailCoincidencia, buscarUsuarioPorId, 
     obtenerUsuariosActivos, obtenerUsuariosInactivos, 
     bloquearUsuario, reactivarUsuario, actualizarUsuarioAdmin, actualizarRolUsuario,
-    crearUsuarioAdmin // 👈 El nuevo servicio que agregamos
+    crearUsuarioAdmin
 } from '../../services/authService';
 import Notification from '../../components/Notification/Notification';
 
@@ -27,7 +27,6 @@ const GestionUsuarios = () => {
     const [tipoBusqueda, setTipoBusqueda] = useState('email'); 
     const [terminoBusqueda, setTerminoBusqueda] = useState('');
 
-    // --- ESTADOS DEL MODAL MULTIUSOS ---
     const [modalVisible, setModalVisible] = useState(false);
     const [modoModal, setModoModal] = useState('crear'); // 'crear' o 'editar'
     const [procesando, setProcesando] = useState(false);
@@ -69,7 +68,6 @@ const GestionUsuarios = () => {
         } finally { setCargando(false); }
     };
 
-    // --- LÓGICA DEL MODAL ---
     const abrirModalCrear = () => {
         setModoModal('crear');
         setFormData({ id: '', nombre: '', telefono: '', email: '', rol: 'CIUDADANO', password: '', activo: true });
@@ -90,7 +88,6 @@ const GestionUsuarios = () => {
         setProcesando(true);
         try {
             if (modoModal === 'crear') {
-                // LLamada al nuevo endpoint
                 await crearUsuarioAdmin(formData);
                 mostrarMsg("Usuario creado exitosamente", "success");
             } else {
@@ -128,7 +125,7 @@ const GestionUsuarios = () => {
             
             <div className={styles.header}>
                 <h2 className={styles.headerTitle}>Directorio de Usuarios</h2>
-                {/* 👈 NUEVO BOTÓN DE CREAR */}
+
                 <button onClick={abrirModalCrear} className={styles.btnPrimary}>
                     <i className="bi bi-plus-lg"></i> Nuevo Usuario
                 </button>
@@ -218,7 +215,7 @@ const GestionUsuarios = () => {
                 )}
             </div>
 
-            {/* MODAL UNIFICADO (CREAR / EDITAR) */}
+
             {modalVisible && (
                 <div className={styles.modalOverlay}>
                     <div className={styles.modalContent}>
@@ -252,7 +249,7 @@ const GestionUsuarios = () => {
                                         </select>
                                     </div>
 
-                                    {/* El password solo se pide al crear */}
+
                                     {modoModal === 'crear' && (
                                         <div className={styles.formGroup}>
                                             <label>Contraseña Temporal</label>
@@ -261,7 +258,7 @@ const GestionUsuarios = () => {
                                     )}
                                 </div>
 
-                                {/* ZONA DE SEGURIDAD (Solo en modo editar) */}
+
                                 {modoModal === 'editar' && (
                                     <div style={{ marginTop: '2rem', padding: '1rem', background: formData.activo ? '#fff1f2' : '#f0fdf4', borderRadius: '8px', border: `1px solid ${formData.activo ? '#fecdd3' : '#bbf7d0'}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <div>

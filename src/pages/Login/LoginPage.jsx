@@ -32,10 +32,8 @@ const LoginPage = () => {
     const [loginData, setLoginData] = useState({ email: '', password: '' });
     const [registerData, setRegisterData] = useState({ nombre: '', email: '', password: '', telefono: '' });
 
-    // 👈 2. Estado para controlar las notificaciones
     const [notificacion, setNotificacion] = useState({ visible: false, mensaje: '', tipo: 'info' });
 
-    // 👈 3. Función auxiliar para mostrar notificaciones fácilmente
     const mostrarNotificacion = (mensaje, tipo) => {
         setNotificacion({ visible: true, mensaje, tipo });
         setTimeout(() => setNotificacion(prev => ({ ...prev, visible: false })), 3000);
@@ -60,7 +58,6 @@ const LoginPage = () => {
             loginExitoso(respuesta.accessToken); 
             navigate('/menu'); 
         } catch (error) {
-            // 🔥 Cambiamos el alert por nuestra Notificación
             mostrarNotificacion(error.response?.data?.mensaje || "Credenciales incorrectas o error en el servidor", "error");
             setIsLoading(false); 
             setLoginData({ ...loginData, password: '' }); 
@@ -76,12 +73,10 @@ const LoginPage = () => {
             const respuesta = await registrarCiudadano(registerData);
             console.log("¡Ciudadano registrado!", respuesta);
             
-            // 🔥 Cambiamos el alert por nuestra Notificación
             mostrarNotificacion("Cuenta creada con éxito. Por favor inicia sesión.", "success");
             togglePanel(); 
             
         } catch (error) {
-            // 🔥 Cambiamos el alert por nuestra Notificación
             mostrarNotificacion(error.response?.data?.mensaje || "Error al crear la cuenta", "error");
         } finally {
             setIsRegisterLoading(false); 
@@ -96,7 +91,6 @@ const LoginPage = () => {
     return (
         <div className={styles.container}>
             
-            {/* 👈 4. Insertamos el componente de Notificación aquí */}
             <Notification 
                 visible={notificacion.visible} 
                 mensaje={notificacion.mensaje} 

@@ -1,7 +1,5 @@
 import React from 'react';
 import styles from './Footer.module.css';
-
-// 👈 Asegúrate de que esta ruta apunte a tu imagen real, igual que en el Header
 import logoAyuntamiento from '../../assets/img/disenoayutnamiento.png'; 
 
 const Footer = () => {
@@ -13,7 +11,6 @@ const Footer = () => {
                 
                 <div className={styles.grid}>
                     
-                    {/* 🏛️ COLUMNA 1: Identidad y Logos */}
                     <div className={styles.column}>
                         <div className={styles.logoContainer}>
                             <img 
@@ -28,7 +25,6 @@ const Footer = () => {
                         </p>
                     </div>
 
-                    {/* 📍 COLUMNA 2: Dirección Oficial */}
                     <div className={styles.column}>
                         <h4 className={styles.subtitle}>Ubicación Oficial</h4>
                         <div className={styles.infoItem}>
@@ -41,7 +37,6 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    {/* 📞 COLUMNA 3: Contacto y Emergencias */}
                     <div className={styles.column}>
                         <h4 className={styles.subtitle}>Contacto y Atención</h4>
                         
@@ -65,7 +60,6 @@ const Footer = () => {
 
                 </div>
 
-                {/* ⚖️ LÍNEA DIVISORIA Y LEGALES */}
                 <div className={styles.bottomBar}>
                     <p className={styles.copyright}>
                         &copy; {anioActual} H. Ayuntamiento de Chilpancingo de los Bravo. Todos los derechos reservados.

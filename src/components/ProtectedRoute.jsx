@@ -11,7 +11,6 @@ const ProtectedRoute = ({ children }) => {
         return <LoadingScreen />;
     }
 
-    // 3. Si ya terminó de cargar y resulta que NO está autenticado, ahora sí lo regresamos al login
     if (!isAuthenticated) {
         return <Navigate to="/login" replace />;
     }

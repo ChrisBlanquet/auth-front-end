@@ -67,7 +67,7 @@ const Header = ({ onLogout, cargando }) => {
 
                     {showDropdown && (
                         <div className={styles.dropdownMenu}>
-                            {/* --- HEADER DEL DROPDOWN ACTUALIZADO --- */}
+
                             <div className={styles.dropdownHeader}>
                                 <span className={styles.userFullname}>{displayNombre}</span>
                                 <span className={styles.userEmail}>{displayEmail}</span>
