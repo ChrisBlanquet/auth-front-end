@@ -5,7 +5,7 @@ import {
     buscarUsuarioPorEmailCoincidencia, buscarUsuarioPorId, 
     obtenerUsuariosActivos, obtenerUsuariosInactivos, 
     bloquearUsuario, reactivarUsuario, actualizarUsuarioAdmin, actualizarRolUsuario,
-    crearUsuarioAdmin
+    crearUsuarioAdmin, resetearPasswordAdmin // --- NUEVO: Importamos la función ---
 } from '../../services/authService';
 import Notification from '../../components/Notification/Notification';
 
@@ -28,9 +28,12 @@ const GestionUsuarios = () => {
     const [terminoBusqueda, setTerminoBusqueda] = useState('');
 
     const [modalVisible, setModalVisible] = useState(false);
-    const [modoModal, setModoModal] = useState('crear'); // 'crear' o 'editar'
+    const [modoModal, setModoModal] = useState('crear'); 
     const [procesando, setProcesando] = useState(false);
     const [formData, setFormData] = useState({ id: '', nombre: '', telefono: '', email: '', rol: 'CIUDADANO', password: '', activo: true });
+    
+    // --- NUEVO: Estado exclusivo para el input de reseteo de contraseña en el modal de edición ---
+    const [nuevaPasswordAdmin, setNuevaPasswordAdmin] = useState('');
 
     const mostrarMsg = (mensaje, tipo) => {
         setNotificacion({ visible: true, mensaje, tipo });
@@ -76,6 +79,7 @@ const GestionUsuarios = () => {
 
     const abrirModalEditar = (usuario) => {
         setModoModal('editar');
+        setNuevaPasswordAdmin(''); // Limpiamos el campo por si tenía algo de una edición anterior
         setFormData({
             id: usuario.id, nombre: usuario.nombre, telefono: usuario.telefono || '', email: usuario.email,
             rol: usuario.rol?.replace('ROLE_', '') || 'CIUDADANO', activo: usuario.activo || usuario.enabled || usuario.estado === 'ACTIVO', password: ''
@@ -91,7 +95,6 @@ const GestionUsuarios = () => {
                 await crearUsuarioAdmin(formData);
                 mostrarMsg("Usuario creado exitosamente", "success");
             } else {
-                // Modo Editar
                 await actualizarUsuarioAdmin(formData.id, { nombre: formData.nombre, telefono: formData.telefono, email: formData.email });
                 await actualizarRolUsuario(formData.id, { rol: formData.rol });
                 mostrarMsg("Usuario actualizado correctamente", "success");
@@ -117,6 +120,26 @@ const GestionUsuarios = () => {
             setModalVisible(false);
             cargarUsuariosPorFiltro();
         } catch (error) { mostrarMsg("Error al cambiar estado", "error"); }
+    };
+
+    // --- NUEVO: Función para ejecutar el reseteo de contraseña ---
+    const handleResetPasswordAdmin = async () => {
+        if (!nuevaPasswordAdmin || nuevaPasswordAdmin.length < 8) {
+            mostrarMsg("La contraseña debe tener al menos 8 caracteres", "warning");
+            return;
+        }
+        
+        setProcesando(true);
+        try {
+            // El backend espera un objeto { nuevaPassword: "..." }
+            await resetearPasswordAdmin(formData.id, { nuevaPassword: nuevaPasswordAdmin });
+            mostrarMsg("Contraseña reseteada exitosamente", "success");
+            setNuevaPasswordAdmin(''); // Limpiamos el input después del éxito
+        } catch (error) {
+            mostrarMsg(error.response?.data?.mensaje || "Error al resetear la contraseña", "error");
+        } finally {
+            setProcesando(false);
+        }
     };
 
     return (
@@ -215,7 +238,6 @@ const GestionUsuarios = () => {
                 )}
             </div>
 
-
             {modalVisible && (
                 <div className={styles.modalOverlay}>
                     <div className={styles.modalContent}>
@@ -249,7 +271,6 @@ const GestionUsuarios = () => {
                                         </select>
                                     </div>
 
-
                                     {modoModal === 'crear' && (
                                         <div className={styles.formGroup}>
                                             <label>Contraseña Temporal</label>
@@ -258,18 +279,45 @@ const GestionUsuarios = () => {
                                     )}
                                 </div>
 
-
                                 {modoModal === 'editar' && (
-                                    <div style={{ marginTop: '2rem', padding: '1rem', background: formData.activo ? '#fff1f2' : '#f0fdf4', borderRadius: '8px', border: `1px solid ${formData.activo ? '#fecdd3' : '#bbf7d0'}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <div>
-                                            <strong style={{ color: formData.activo ? '#991b1b' : '#166534', display: 'block', fontSize: '0.9rem' }}>
-                                                {formData.activo ? 'Acceso Permitido' : 'Acceso Bloqueado'}
-                                            </strong>
+                                    <>
+                                        {/* --- NUEVO: Bloque para resetear la contraseña del usuario --- */}
+                                        <div style={{ marginTop: '2rem', padding: '1rem', background: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                                            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', fontSize: '0.9rem', color: '#334155' }}>
+                                                Forzar Reseteo de Contraseña
+                                            </label>
+                                            <div style={{ display: 'flex', gap: '10px' }}>
+                                                <input 
+                                                    className={styles.input} 
+                                                    type="text" 
+                                                    placeholder="Nueva contraseña (mínimo 8 caracteres)" 
+                                                    value={nuevaPasswordAdmin} 
+                                                    onChange={(e) => setNuevaPasswordAdmin(e.target.value)} 
+                                                    style={{ flexGrow: 1 }}
+                                                />
+                                                <button 
+                                                    type="button" 
+                                                    onClick={handleResetPasswordAdmin} 
+                                                    className={styles.btnPrimary} 
+                                                    disabled={procesando || nuevaPasswordAdmin.length < 8}
+                                                >
+                                                    <i className="bi bi-key"></i> Resetear
+                                                </button>
+                                            </div>
                                         </div>
-                                        <button type="button" onClick={toggleEstadoBloqueo} className={styles.btnPrimary} style={{ background: formData.activo ? '#ef4444' : '#10b981' }}>
-                                            {formData.activo ? <><i className="bi bi-lock-fill"></i> Bloquear</> : <><i className="bi bi-unlock-fill"></i> Reactivar</>}
-                                        </button>
-                                    </div>
+
+                                        {/* Bloque original de Bloquear / Reactivar Cuenta */}
+                                        <div style={{ marginTop: '1rem', padding: '1rem', background: formData.activo ? '#fff1f2' : '#f0fdf4', borderRadius: '8px', border: `1px solid ${formData.activo ? '#fecdd3' : '#bbf7d0'}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <div>
+                                                <strong style={{ color: formData.activo ? '#991b1b' : '#166534', display: 'block', fontSize: '0.9rem' }}>
+                                                    {formData.activo ? 'Acceso Permitido' : 'Acceso Bloqueado'}
+                                                </strong>
+                                            </div>
+                                            <button type="button" onClick={toggleEstadoBloqueo} className={styles.btnPrimary} style={{ background: formData.activo ? '#ef4444' : '#10b981' }}>
+                                                {formData.activo ? <><i className="bi bi-lock-fill"></i> Bloquear</> : <><i className="bi bi-unlock-fill"></i> Reactivar</>}
+                                            </button>
+                                        </div>
+                                    </>
                                 )}
                             </div>
 

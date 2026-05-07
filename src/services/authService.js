@@ -116,3 +116,11 @@ export const crearUsuarioAdmin = async (datosRegistro) => {
     return response.data;
 };
 
+export const resetearPasswordAdmin = async (id, datosPassword) => {
+    try {
+        const response = await api.patch(`auth/admin/usuarios/${id}/reset-password`, datosPassword);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
