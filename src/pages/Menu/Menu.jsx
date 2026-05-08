@@ -41,13 +41,25 @@ const Menu = () => {
                         onClick={() => navigate('/admin/usuarios')}
                     >
                         <i className={`bi bi-people ${styles.cardIcon}`}></i>
-                        <h3>Consultar Usuarios</h3>
+                        <h3>Consultar usuarios</h3>
                         <p>Gestión del sistema</p>
                     </div>
                     )}
+
+                    {(rol === 'ROLE_CIUDADANO' || rol === 'CIUDADANO') && (
+                    <div 
+                        className={styles.actionCard} 
+                        onClick={() => navigate('/reportar-incidencia')} 
+                    >
+                        <i className={`bi bi-megaphone ${styles.cardIcon}`} style={{ color: '#00A99D' }}></i>
+                        <h3>Reportar incidencia</h3>
+                        <p>Baches, fugas, alumbrado, etc.</p>
+                    </div>
+                    )}
+
                     <div className={styles.actionCard}>
                         <i className={`bi bi-shield-lock ${styles.cardIcon}`}></i>
-                        <h3>Mis Permisos</h3>
+                        <h3>Mis permisos</h3>
                         <p>roles actuales</p>
                         {
                             permisos.length > 0 ? (

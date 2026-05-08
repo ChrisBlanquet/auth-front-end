@@ -1,3 +1,4 @@
+// src/routes/AppRouter.jsx
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from '../pages/Login/LoginPage';
@@ -7,6 +8,7 @@ import PrivateLayout from '../components/PrivateLayout';
 import Perfil from '../pages/Perfil/Perfil';
 import GestionUsuarios from '../pages/Admin/GestionUsuarios';
 import RoleGuard from '../components/RoleGuard';
+import FormularioIncidencia from '../components/CrearIncidencia/FormularioIncidencia';
 
 const AppRouter = () => {
     return (
@@ -14,7 +16,7 @@ const AppRouter = () => {
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<LoginPage />} />
 
-            <Route 
+            <Route
                 element={
                     <ProtectedRoute>
                         <PrivateLayout />
@@ -28,8 +30,13 @@ const AppRouter = () => {
                     <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA']}>
                         <GestionUsuarios />
                     </RoleGuard>
-                } 
-            />
+                }
+                />
+                <Route path="/reportar-incidencia" element={
+                    <RoleGuard rolesPermitidos={['ROLE_CIUDADANO', 'CIUDADANO']}>
+                        <FormularioIncidencia />
+                    </RoleGuard>
+                } />
 
 
             </Route>

@@ -1,0 +1,208 @@
+/* src/components/CrearIncidencia/Formulario.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.container {
+    width: 100%;
+    min-height: calc(100vh - 150px);
+    background-color: transparent;
+    font-family: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.formContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 100%;
+    max-width: 600px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-top: 5px solid #f59e0b; /* Color ámbar/dorado institucional */
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a; /* Slate 900 */
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #64748b; /* Slate 500 */
+    margin-bottom: 2.5rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.inputGroup {
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.inputGroup label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    display: block;
+    font-size: 0.95rem;
+    color: #1e293b; /* Slate 800 para los labels */
+}
+
+.inputGroup input,
+.inputGroup select,
+.inputGroup textarea {
+    width: 100%;
+    padding: 16px 20px;
+    box-sizing: border-box;
+    background-color: #f8fafc; /* Slate 50 */
+    border: 1px solid #e2e8f0; /* Slate 200 */
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #333;
+    transition: all 0.3s ease;
+    outline: none;
+    appearance: none;
+}
+
+/* Flecha del select en color Slate 500 */
+.inputGroup select {
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748b%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.2rem top 50%;
+    background-size: 0.8rem auto;
+}
+
+.inputGroup textarea {
+    resize: none; 
+    min-height: 120px;
+}
+
+.inputGroup input::placeholder,
+.inputGroup textarea::placeholder {
+    color: #94a3b8; /* Slate 400 */
+}
+
+.inputGroup input:focus,
+.inputGroup select:focus,
+.inputGroup textarea:focus {
+    border-color: #f59e0b; /* Borde Ámbar al enfocar */
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15); /* Halo Ámbar suave */
+}
+
+/* Botón principal estilo institucional */
+.btnPrimary {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f59e0b; /* Ámbar */
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.3);
+    margin-top: 10px;
+}
+
+.btnPrimary:hover:not(:disabled) {
+    background-color: #d97706; /* Ámbar más oscuro */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px -1px rgba(245, 158, 11, 0.4);
+}
+
+.btnPrimary:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.btnPrimary:disabled {
+    background-color: #cbd5e1; /* Slate 300 */
+    box-shadow: none;
+    cursor: not-allowed;
+    color: #94a3b8;
+}
+
+/* Alertas */
+.alertSuccess, .alertError {
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+.alertSuccess {
+    background-color: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.alertError {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* Modal */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 23, 42, 0.7); /* Slate 900 con opacidad */
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modalContent {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-top: 5px solid #10b981; /* Verde esmeralda para éxito */
+    animation: popIn 0.3s ease-out forwards;
+}
+
+.modalIcon {
+    font-size: 4.5rem;
+    color: #10b981; /* Verde esmeralda */
+    margin-bottom: 10px;
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
