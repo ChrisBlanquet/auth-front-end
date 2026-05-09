@@ -10,6 +10,8 @@ import GestionUsuarios from '../pages/Admin/GestionUsuarios';
 import RoleGuard from '../components/RoleGuard';
 import FormularioIncidencia from '../components/CrearIncidencia/FormularioIncidencia';
 import MisReportes from '../components/Incidencias/MisReportes';
+import AsignarResponsable from "../components/Incidencias/AsignarResponsable";
+import CambiarEstado from '../components/Incidencias/CambiarEstado';
 
 const AppRouter = () => {
     return (
@@ -40,6 +42,17 @@ const AppRouter = () => {
                     </RoleGuard>
                 } />
 
+                <Route path="/admin/asignar-responsable" element={
+                    <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA']}>
+                        <AsignarResponsable />
+                    </RoleGuard>
+                } />
+
+                <Route path="/admin/cambiar-estado" element={
+                    <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA']}>
+                        <CambiarEstado />
+                    </RoleGuard>
+                } />
 
             </Route>
 
