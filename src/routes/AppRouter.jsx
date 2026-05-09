@@ -9,6 +9,7 @@ import Perfil from '../pages/Perfil/Perfil';
 import GestionUsuarios from '../pages/Admin/GestionUsuarios';
 import RoleGuard from '../components/RoleGuard';
 import FormularioIncidencia from '../components/CrearIncidencia/FormularioIncidencia';
+import MisReportes from '../components/Incidencias/MisReportes';
 
 const AppRouter = () => {
     return (
@@ -26,6 +27,7 @@ const AppRouter = () => {
                 {/* Todas las rutas*/}
                 <Route path="/menu" element={<Menu />} />
                 <Route path="/perfil" element={<Perfil />} />
+                <Route path="/mis-reportes" element={<MisReportes />} />
                 <Route path="/admin/usuarios" element={
                     <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA']}>
                         <GestionUsuarios />

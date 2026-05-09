@@ -46,7 +46,7 @@ const Menu = () => {
                     </div>
                     )}
 
-                    {(rol === 'ROLE_CIUDADANO' || rol === 'CIUDADANO') && (
+                    {rol === 'ROLE_CIUDADANO' && (
                     <div 
                         className={styles.actionCard} 
                         onClick={() => navigate('/reportar-incidencia')} 

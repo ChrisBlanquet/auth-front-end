@@ -1,5 +1,5 @@
 // src/services/IncidenciasService.js
-import api from './api'; 
+import api from './api';
 
 const API_BASE_URL = 'http://135.232.229.213:9000/api';
 
@@ -11,7 +11,7 @@ export const IncidenciasService = {
       return response.data;
     } catch (error) {
       console.error("Error en IncidenciasService.crearIncidencia:", error);
-      throw error; 
+      throw error;
     }
   },
 
@@ -22,7 +22,17 @@ export const IncidenciasService = {
       return Array.isArray(data) ? data : (data.data || []);
     } catch (error) {
       console.error("Error al obtener tipos:", error);
-      return []; 
+      return [];
+    }
+  },
+
+  obtenerMisIncidencias: async (usuarioId) => {
+    try {
+      const response = await api.get(`${API_BASE_URL}/incidencias/usuario/${usuarioId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error al cargar mis incidencias:", error);
+      return []; // Retornamos un arreglo vacío en caso de error
     }
   },
 
