@@ -105,5 +105,34 @@ export const IncidenciasService = {
   guardarEvidenciaDespues: async (incidenciaId, personalId, urlImagen) => {
     const response = await api.post(`${API_BASE_URL}/evidencias/fotos-despues`, { idHistorialEstado: incidenciaId, personalId: personalId, url: urlImagen });
     return response.data;
+  },
+
+  obtenerColoniasPorCodigoPostal: async (codigoPostal) => {
+    try {
+      const response = await api.get(`${API_BASE_URL}/ubicaciones/colonias/codigo-postal/${codigoPostal}`);
+      return response.data || [];
+    } catch (error) {
+      console.error("Error al obtener colonias por CP:", error);
+      throw error;
+    }
+  },
+
+  crearUbicacion: async (ubicacionData) => {
+    try {
+      const response = await api.post(`${API_BASE_URL}/ubicaciones`, ubicacionData);
+      return response.data;
+    } catch (error) {
+      console.error("Error al crear ubicación:", error);
+      throw error;
+    }
+  },
+  eliminarIncidencia: async (incidenciaId) => {
+    try {
+      const response = await api.delete(`${API_BASE_URL}/incidencias/${incidenciaId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error al eliminar incidencia:", error);
+      throw error;
+    }
   }
 };

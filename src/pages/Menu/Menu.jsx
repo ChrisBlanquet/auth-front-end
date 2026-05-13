@@ -46,8 +46,8 @@ const Menu = () => {
                                 <p>Gestión del sistema</p>
                             </div>
 
-                            <div 
-                                className={styles.actionCard} 
+                            <div
+                                className={styles.actionCard}
                                 onClick={() => navigate('/admin/asignar-responsable')}
                             >
                                 <i className={`bi bi-person-badge ${styles.cardIcon}`} style={{ color: '#F39C12' }}></i>
@@ -55,8 +55,8 @@ const Menu = () => {
                                 <p>Asignar responsables a incidencias</p>
                             </div>
 
-                            <div 
-                                className={styles.actionCard} 
+                            <div
+                                className={styles.actionCard}
                                 onClick={() => navigate('/admin/cambiar-estado')}
                             >
                                 <i className={`bi bi-clipboard2-pulse ${styles.cardIcon}`} style={{ color: '#E74C3C' }}></i>
