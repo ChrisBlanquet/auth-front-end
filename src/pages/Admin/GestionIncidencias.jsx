@@ -8,6 +8,7 @@ const GestionIncidencias = () => {
     const [incidenciasFull, setIncidenciasFull] = useState([]);
     const [incidenciasMostradas, setIncidenciasMostradas] = useState([]);
     const [tiposIncidencia, setTiposIncidencia] = useState([]);
+    const [personal, setPersonal] = useState([]);
     const [cargando, setCargando] = useState(false);
     const [notificacion, setNotificacion] = useState({ visible: false, mensaje: '', tipo: 'info' });
 
@@ -34,12 +35,14 @@ const GestionIncidencias = () => {
     const cargarDatosIniciales = async () => {
         setCargando(true);
         try {
-            const [dataIncidencias, dataTipos] = await Promise.all([
+            const [dataIncidencias, dataTipos, dataPersonal] = await Promise.all([
                 IncidenciasService.obtenerTodasLasIncidencias(),
-                IncidenciasService.obtenerTiposIncidencia()
+                IncidenciasService.obtenerTiposIncidencia(),
+                IncidenciasService.obtenerPersonal()
             ]);
             setIncidenciasFull(dataIncidencias);
             setTiposIncidencia(dataTipos);
+            setPersonal(dataPersonal);
         } catch (error) {
             mostrarMsg("Error al cargar las incidencias", "error");
         } finally {
@@ -51,6 +54,12 @@ const GestionIncidencias = () => {
         if (!idBuscado) return 'N/A';
         const tipoEncontrado = tiposIncidencia.find(tipo => tipo.id === idBuscado);
         return tipoEncontrado ? tipoEncontrado.nombre : 'N/A';
+    };
+
+    const getNombrePersonal = (idBuscado) => {
+        if (!idBuscado) return 'Sin asignar';
+        const empleado = personal.find(p => p.id === idBuscado);
+        return empleado ? empleado.nombre : `ID: ${idBuscado}`;
     };
 
     const aplicarFiltros = () => {
@@ -172,6 +181,7 @@ const GestionIncidencias = () => {
                                 <th>Descripcion</th>
                                 <th>Fecha</th>
                                 <th>Ubicación / Colonia</th>
+                                <th>Asignacion personal</th>
                                 <th>Estado</th>
                                 <th style={{ textAlign: 'center' }}>Acciones</th>
                             </tr>
@@ -199,6 +209,19 @@ const GestionIncidencias = () => {
                                         </td>
                                         <td>{new Date(inc.fechaCreacion || inc.fechaReporte).toLocaleDateString()}</td>
                                         <td>{inc.ubicacion?.colonia || 'Sin especificar'}</td>
+                                        <td>
+                                            {inc.personalId ? (
+                                                <span style={{ color: '#047857', fontWeight: '500' }}>
+                                                    <i className="bi bi-person-check-fill" style={{ marginRight: '5px' }}></i>
+                                                    {getNombrePersonal(inc.personalId)}
+                                                </span>
+                                            ) : (
+                                                <span style={{ color: '#d97706', fontStyle: 'italic' }}>
+                                                    <i className="bi bi-person-dash" style={{ marginRight: '5px' }}></i>
+                                                    Sin asignar
+                                                </span>
+                                            )}
+                                        </td>
                                         <td>{estadoAmigable}</td>
                                         <td style={{ verticalAlign: 'middle', textAlign: 'center' }}>
                                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}>
