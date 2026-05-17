@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// Puedes reutilizar el mismo CSS de Gestión de Usuarios o crear uno nuevo
 import styles from './GestionUsuarios.module.css';
 import { IncidenciasService } from '../../services/IncidenciasService';
 import Notification from '../../components/Notification/Notification';

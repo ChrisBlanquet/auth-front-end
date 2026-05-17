@@ -32,7 +32,7 @@ const MisReportes = () => {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>Mis reportes</h1>
+            <h1 className={styles.title}>Mis incidencias</h1>
             <p className={styles.subtitle}>Historial de incidencias que has reportado</p>
 
             {misReportes.length === 0 ? (

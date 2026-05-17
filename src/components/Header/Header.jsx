@@ -5,7 +5,7 @@ import styles from './Header.module.css';
 import logoAyuntamiento from '../../assets/img/disenoayutnamiento.png';
 
 const Header = ({ onLogout, cargando }) => {
-    const { rol, usuario } = useAuth(); 
+    const { rol, usuario } = useAuth();
     const [showDropdown, setShowDropdown] = useState(false);
 
     const displayRole = rol ? rol.replace('ROLE_', '') : '';
@@ -28,13 +28,19 @@ const Header = ({ onLogout, cargando }) => {
 
                 {rol === 'ROLE_CIUDADANO' && (
                     <NavLink to="/mis-reportes" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
-                        Reportes
+                        Incidencias
                     </NavLink>
                 )}
 
                 {(rol === 'ROLE_ADMIN') && (
                     <NavLink to="/admin/incidencias" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
                         Gestión
+                    </NavLink>
+                )}
+
+                {rol === 'ROLE_ADMIN' && (
+                    <NavLink to="/admin/reportes" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
+                        Reportes
                     </NavLink>
                 )}
 
@@ -52,7 +58,7 @@ const Header = ({ onLogout, cargando }) => {
                     <span className={styles.badge}>3</span>
                 </button>
 
-                <div 
+                <div
                     className={styles.userProfileContainer}
                     onMouseEnter={() => setShowDropdown(true)}
                     onMouseLeave={() => setShowDropdown(false)}
@@ -75,13 +81,13 @@ const Header = ({ onLogout, cargando }) => {
                                 <span className={styles.userFullname}>{displayNombre}</span>
                                 <span className={styles.userEmail}>{displayEmail}</span>
                             </div>
-                            
+
                             <hr className={styles.divider} />
-                            
+
                             <NavLink to="/perfil" className={styles.dropdownItem}>
                                 <i className="bi bi-person"></i> Mi Perfil
                             </NavLink>
-                            
+
                             <NavLink to="/configuracion" className={styles.dropdownItem}>
                                 <i className="bi bi-gear"></i> Configuraciones
                             </NavLink>
@@ -91,11 +97,11 @@ const Header = ({ onLogout, cargando }) => {
                                     <i className="bi bi-shield-check"></i> Admin Usuarios
                                 </NavLink>
                             )}
-                            
+
                             <hr className={styles.divider} />
-                            
-                            <button 
-                                onClick={onLogout} 
+
+                            <button
+                                onClick={onLogout}
                                 disabled={cargando}
                                 className={`${styles.dropdownItem} ${styles.logoutBtn}`}
                                 style={{ opacity: cargando ? 0.5 : 1, cursor: cargando ? 'wait' : 'pointer' }}
