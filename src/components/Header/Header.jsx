@@ -49,6 +49,12 @@ const Header = ({ onLogout, cargando }) => {
                         Gestión institucional
                     </NavLink>
                 )}
+
+                {rol === 'ROLE_ADMIN' && (
+                    <NavLink to="/admin/evidencias" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
+                        Evidencias
+                    </NavLink>
+                )}
             </nav>
 
             {/* --- SECCIÓN DERECHA --- */}

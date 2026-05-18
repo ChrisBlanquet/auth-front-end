@@ -19,6 +19,7 @@ import Departamentos from '../components/GestionInstitucional/Departamentos';
 import Puestos from '../components/GestionInstitucional/Puestos';
 import Personal from '../components/GestionInstitucional/Personal';
 import Cuadrillas from '../components/GestionInstitucional/Cuadrillas';
+import Evidencias from '../components/Evidencias/Evidencias';
 
 const AppRouter = () => {
     return (
@@ -99,6 +100,12 @@ const AppRouter = () => {
                 <Route path="/admin/gestion-institucional/cuadrillas" element={
                     <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA']}>
                         <Cuadrillas />
+                    </RoleGuard>
+                } />
+
+                <Route path="/admin/evidencias" element={
+                    <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA']}>
+                        <Evidencias />
                     </RoleGuard>
                 } />
 
