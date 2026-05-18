@@ -14,6 +14,11 @@ import AsignarResponsable from "../components/Incidencias/AsignarResponsable";
 import CambiarEstado from '../components/Incidencias/CambiarEstado';
 import GestionIncidencias from '../pages/Admin/GestionIncidencias';
 import ReportesAdmin from '../pages/Admin/ReportesAdmin';
+import MenuGestion from "../components/GestionInstitucional/MenuGestion";
+import Departamentos from '../components/GestionInstitucional/Departamentos';
+import Puestos from '../components/GestionInstitucional/Puestos';
+import Personal from '../components/GestionInstitucional/Personal';
+import Cuadrillas from '../components/GestionInstitucional/Cuadrillas';
 
 const AppRouter = () => {
     return (
@@ -64,6 +69,36 @@ const AppRouter = () => {
                 <Route path="/admin/reportes" element={
                     <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA']}>
                         <ReportesAdmin />
+                    </RoleGuard>
+                } />
+
+                <Route path="/admin/gestion-institucional" element={
+                    <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA']}>
+                        <MenuGestion />
+                    </RoleGuard>
+                } />
+
+                <Route path="/admin/gestion-institucional/departamentos" element={
+                    <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA']}>
+                        <Departamentos />
+                    </RoleGuard>
+                } />
+
+                <Route path="/admin/gestion-institucional/puestos" element={
+                    <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA']}>
+                        <Puestos />
+                    </RoleGuard>
+                } />
+
+                <Route path="/admin/gestion-institucional/personal" element={
+                    <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA']}>
+                        <Personal />
+                    </RoleGuard>
+                } />
+
+                <Route path="/admin/gestion-institucional/cuadrillas" element={
+                    <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA']}>
+                        <Cuadrillas />
                     </RoleGuard>
                 } />
 

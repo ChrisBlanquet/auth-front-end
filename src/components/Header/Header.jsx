@@ -34,7 +34,7 @@ const Header = ({ onLogout, cargando }) => {
 
                 {(rol === 'ROLE_ADMIN') && (
                     <NavLink to="/admin/incidencias" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
-                        Gestión
+                        Incidencias
                     </NavLink>
                 )}
 
@@ -45,8 +45,8 @@ const Header = ({ onLogout, cargando }) => {
                 )}
 
                 {rol === 'ROLE_ADMIN' && (
-                    <NavLink to="/estadisticas" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
-                        Estadísticas
+                    <NavLink to="/admin/gestion-institucional" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
+                        Gestión institucional
                     </NavLink>
                 )}
             </nav>
