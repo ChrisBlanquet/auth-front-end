@@ -111,7 +111,7 @@ const AppRouter = () => {
                 } />
 
                 <Route path="/admin/comentarios" element={
-                    <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA', 'ROLE_CIUDADANO']}>
+                    <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA', 'ROLE_CIUDADANO', 'ROLE_EMPLEADO']}>
                         <Comentarios/>
                     </RoleGuard>
                 } />

@@ -57,7 +57,7 @@ const Header = ({ onLogout, cargando }) => {
                     </NavLink>
                 )}
 
-                {(rol === 'ROLE_ADMIN' || rol === 'ROLE_SISTEMA' || rol === 'ROLE_CIUDADANO') && (
+                {(rol === 'ROLE_ADMIN' || rol === 'ROLE_SISTEMA' || rol === 'ROLE_CIUDADANO' || rol === 'ROLE_EMPLEADO') && (
                     <NavLink to="/admin/comentarios" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
                         Comentarios
                     </NavLink>
