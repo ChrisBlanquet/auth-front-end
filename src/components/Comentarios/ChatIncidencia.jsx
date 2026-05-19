@@ -1,16 +1,56 @@
 import React, { useEffect, useState, useRef } from "react";
 import { getComentariosByIncidencia, postComentario } from "../../services/ComentarioService";
+import { buscarUsuarioPorId } from "../../services/authService";
 import { useAuth } from "../../context/AuthContext";
 import ComentarioBubble from "./ComentarioBubble";
 import ComentarioInput from "./ComentarioInput";
-import styles from './Chat.module.css'; // <-- Importamos los estilos
+import styles from './Chat.module.css'; 
 
 const ChatIncidencia = ({ incidencia, onClose }) => {
-  const { usuario } = useAuth();
+  const { usuario, rol } = useAuth(); 
   const [comentarios, setComentarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const chatRef = useRef(null);
+
+  const getNombreUsuario = (usuarioData) => {
+    if (!usuarioData) return null;
+    const nombre = usuarioData.nombre || usuarioData.firstName || usuarioData.name;
+    const apellidos = usuarioData.apellidos || usuarioData.apellidoPaterno || usuarioData.apellidoMaterno || usuarioData.lastName || usuarioData.surname;
+    const nombreCompleto = [nombre, apellidos].filter(Boolean).join(' ').trim();
+    return nombreCompleto || usuarioData.nombreCompleto || usuarioData.fullName || usuarioData.username || usuarioData.email || null;
+  };
+
+  const asignarNombresDeUsuarios = async (comentariosData) => {
+    const idsUnicos = [...new Set(comentariosData
+      .map((c) => c.usuarioId || c.usuario?.id)
+      .filter((id) => id))];
+
+    const nombresPorId = {};
+    await Promise.all(idsUnicos.map(async (id) => {
+      try {
+        const usuarioResponse = await buscarUsuarioPorId(id);
+        const usuarioData = Array.isArray(usuarioResponse) ? usuarioResponse[0] : usuarioResponse;
+        if (usuarioData) {
+          nombresPorId[id] = getNombreUsuario(usuarioData) || `Usuario ${id}`;
+        }
+      } catch (error) {
+        nombresPorId[id] = `Usuario ${id}`;
+      }
+    }));
+
+    return comentariosData.map((comentario) => {
+      const comentarioUsuarioId = comentario.usuarioId || comentario.usuario?.id;
+      const nombreUsuarioComentario = getNombreUsuario(comentario.usuario) || comentario.usuarioNombre || comentario.nombre || comentario.email;
+
+      return {
+        ...comentario,
+        usuarioNombre: nombreUsuarioComentario
+          || (comentarioUsuarioId === usuario?.id ? getNombreUsuario(usuario) || "Tú" : nombresPorId[comentarioUsuarioId])
+          || (comentarioUsuarioId === usuario?.id ? "Tú" : `Usuario ${comentarioUsuarioId}`),
+      };
+    });
+  };
 
   const cargarComentarios = async () => {
     setLoading(true);
@@ -18,7 +58,8 @@ const ChatIncidencia = ({ incidencia, onClose }) => {
     try {
       const res = await getComentariosByIncidencia(incidencia.id);
       const data = res.data || [];
-      setComentarios(data.sort((a, b) => new Date(a.fecha) - new Date(b.fecha)));
+      const comentariosConNombres = await asignarNombresDeUsuarios(data);
+      setComentarios(comentariosConNombres.sort((a, b) => new Date(a.fecha) - new Date(b.fecha)));
     } catch (err) {
       console.error("Error al cargar comentarios:", err);
       setError("Error al cargar los comentarios");
@@ -44,8 +85,14 @@ const ChatIncidencia = ({ incidencia, onClose }) => {
         usuarioId: Number(usuario.id),
         mensaje: mensaje,
       };
-      await postComentario(payload);
-      await cargarComentarios();
+
+      const res = await postComentario(payload);
+      const creado = res?.data || res;
+      if (creado && creado.id) {
+        setComentarios((prev) => [...prev, creado]);
+      } else {
+        await cargarComentarios();
+      }
     } catch (err) {
       console.error("Error al enviar comentario:", err);
       await cargarComentarios();
