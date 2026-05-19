@@ -1,13 +1,11 @@
 // src/services/IncidenciasService.js
 import api from './api';
 
-const API_BASE_URL = 'http://135.232.229.213:9000/api';
-
 export const IncidenciasService = {
 
   crearIncidencia: async (incidenciaData) => {
     try {
-      const response = await api.post(`${API_BASE_URL}/incidencias`, incidenciaData);
+      const response = await api.post(`/incidencias`, incidenciaData);
       return response.data;
     } catch (error) {
       console.error("Error en IncidenciasService.crearIncidencia:", error);
@@ -17,7 +15,7 @@ export const IncidenciasService = {
 
   obtenerTiposIncidencia: async () => {
     try {
-      const response = await api.get(`${API_BASE_URL}/incidencias/catalogos-tipos`);
+      const response = await api.get(`/incidencias/catalogos-tipos`);
       const data = response.data;
       return Array.isArray(data) ? data : (data.data || []);
     } catch (error) {
@@ -28,7 +26,7 @@ export const IncidenciasService = {
 
   obtenerMisIncidencias: async (usuarioId) => {
     try {
-      const response = await api.get(`${API_BASE_URL}/incidencias/usuario/${usuarioId}`);
+      const response = await api.get(`/incidencias/usuario/${usuarioId}`);
       return response.data;
     } catch (error) {
       console.error("Error al cargar mis incidencias:", error);
@@ -38,7 +36,7 @@ export const IncidenciasService = {
 
   asignarResponsable: async (incidenciaId, personalId, usuarioAsignador) => {
     try {
-      const response = await api.patch(`${API_BASE_URL}/incidencias/${incidenciaId}/asignar?personalId=${personalId}&usuarioAsignador=${usuarioAsignador}`);
+      const response = await api.patch(`/incidencias/${incidenciaId}/asignar?personalId=${personalId}&usuarioAsignador=${usuarioAsignador}`);
       return response.data;
     } catch (error) {
       console.error("Error en asignarResponsable:", error);
@@ -48,7 +46,7 @@ export const IncidenciasService = {
 
   obtenerTodasLasIncidencias: async () => {
     try {
-      const response = await api.get(`${API_BASE_URL}/incidencias`);
+      const response = await api.get(`/incidencias`);
       return response.data;
     } catch (error) {
       console.error("Error al cargar:", error);
@@ -58,7 +56,7 @@ export const IncidenciasService = {
 
   obtenerPersonal: async () => {
     try {
-      const response = await api.get(`${API_BASE_URL}/gestion/personal`);
+      const response = await api.get(`/gestion/personal`);
       const data = response.data;
       return Array.isArray(data) ? data : (data.data || []);
     } catch (error) {
@@ -69,7 +67,7 @@ export const IncidenciasService = {
 
   obtenerIncidenciasSinAsignar: async () => {
     try {
-      const response = await api.get(`${API_BASE_URL}/incidencias/sin-asignar`);
+      const response = await api.get(`/incidencias/sin-asignar`);
       return response.data;
     } catch (error) {
       console.error("Error al cargar:", error);
@@ -84,7 +82,7 @@ export const IncidenciasService = {
         comentarios: comentarios,
         usuarioModificador: usuarioModificador
       });
-      const response = await api.patch(`${API_BASE_URL}/incidencias/${incidenciaId}/estado?${params.toString()}`);
+      const response = await api.patch(`/incidencias/${incidenciaId}/estado?${params.toString()}`);
       return response.data;
     } catch (error) {
       console.error("Error en cambiarEstado:", error);
@@ -93,23 +91,23 @@ export const IncidenciasService = {
   },
 
   guardarEvidenciaAntes: async (incidenciaId, urlImagen) => {
-    const response = await api.post(`${API_BASE_URL}/evidencias/fotos-antes`, { idHistorialEstado: incidenciaId, url: urlImagen });
+    const response = await api.post(`/evidencias/fotos-antes`, { idHistorialEstado: incidenciaId, url: urlImagen });
     return response.data;
   },
 
   guardarEvidenciaProceso: async (incidenciaId, personalId, urlImagen) => {
-    const response = await api.post(`${API_BASE_URL}/evidencias/fotos-proceso`, { idHistorialEstado: incidenciaId, personalId: personalId, url: urlImagen });
+    const response = await api.post(`/evidencias/fotos-proceso`, { idHistorialEstado: incidenciaId, personalId: personalId, url: urlImagen });
     return response.data;
   },
 
   guardarEvidenciaDespues: async (incidenciaId, personalId, urlImagen) => {
-    const response = await api.post(`${API_BASE_URL}/evidencias/fotos-despues`, { idHistorialEstado: incidenciaId, personalId: personalId, url: urlImagen });
+    const response = await api.post(`/evidencias/fotos-despues`, { idHistorialEstado: incidenciaId, personalId: personalId, url: urlImagen });
     return response.data;
   },
 
   obtenerColoniasPorCodigoPostal: async (codigoPostal) => {
     try {
-      const response = await api.get(`${API_BASE_URL}/ubicaciones/colonias/codigo-postal/${codigoPostal}`);
+      const response = await api.get(`/ubicaciones/colonias/codigo-postal/${codigoPostal}`);
       return response.data || [];
     } catch (error) {
       console.error("Error al obtener colonias por CP:", error);
@@ -119,7 +117,7 @@ export const IncidenciasService = {
 
   crearUbicacion: async (ubicacionData) => {
     try {
-      const response = await api.post(`${API_BASE_URL}/ubicaciones`, ubicacionData);
+      const response = await api.post(`/ubicaciones`, ubicacionData);
       return response.data;
     } catch (error) {
       console.error("Error al crear ubicación:", error);
@@ -128,7 +126,7 @@ export const IncidenciasService = {
   },
   eliminarIncidencia: async (incidenciaId) => {
     try {
-      const response = await api.delete(`${API_BASE_URL}/incidencias/${incidenciaId}`);
+      const response = await api.delete(`/incidencias/${incidenciaId}`);
       return response.data;
     } catch (error) {
       console.error("Error al eliminar incidencia:", error);
