@@ -1,0 +1,90 @@
+import React, { useEffect, useState, useRef } from "react";
+import { getComentariosByIncidencia, postComentario } from "../../services/ComentarioService";
+import { useAuth } from "../../context/AuthContext";
+import ComentarioBubble from "./ComentarioBubble";
+import ComentarioInput from "./ComentarioInput";
+import styles from './Chat.module.css'; // <-- Importamos los estilos
+
+const ChatIncidencia = ({ incidencia, onClose }) => {
+  const { usuario } = useAuth();
+  const [comentarios, setComentarios] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const chatRef = useRef(null);
+
+  const cargarComentarios = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await getComentariosByIncidencia(incidencia.id);
+      const data = res.data || [];
+      setComentarios(data.sort((a, b) => new Date(a.fecha) - new Date(b.fecha)));
+    } catch (err) {
+      console.error("Error al cargar comentarios:", err);
+      setError("Error al cargar los comentarios");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    cargarComentarios();
+  }, [incidencia.id]);
+
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, [comentarios]);
+
+  const handleEnviar = async (mensaje) => {
+    try {
+      const payload = {
+        incidenciaId: Number(incidencia.id),
+        usuarioId: Number(usuario.id),
+        mensaje: mensaje,
+      };
+      await postComentario(payload);
+      await cargarComentarios();
+    } catch (err) {
+      console.error("Error al enviar comentario:", err);
+      await cargarComentarios();
+    }
+  };
+
+  return (
+    <div className={styles.card}>
+      <div className={styles.cardHeader}>
+        <div>
+          <h5 className={styles.cardTitle}>{incidencia.titulo}</h5>
+          <span className={incidencia.estado === "ABIERTA" ? styles.badge : styles.badgeClosed}>
+            {incidencia.estado}
+          </span>
+        </div>
+        <button className={styles.btnCancel} onClick={onClose}>Cerrar</button>
+      </div>
+
+      <div className={styles.cardBody} ref={chatRef}>
+        {error && <div className="alert alert-danger py-2" style={{borderRadius: '8px'}}>{error}</div>}
+        
+        {loading ? (
+          <div style={{textAlign: 'center', color: '#64748b', marginTop: '2rem'}}>Cargando...</div>
+        ) : comentarios.length === 0 ? (
+          <div style={{textAlign: 'center', color: '#64748b', marginTop: '2rem'}}>No hay comentarios</div>
+        ) : (
+          comentarios.map((c) => (
+            <ComentarioBubble key={c.id} comentario={c} esPropio={c.usuarioId === usuario.id} />
+          ))
+        )}
+      </div>
+
+      {incidencia.estado !== "CERRADA" && (
+        <div className={styles.cardFooter}>
+          <ComentarioInput onEnviar={handleEnviar} />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ChatIncidencia;

@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import styles from './Header.module.css';
 import logoAyuntamiento from '../../assets/img/disenoayutnamiento.png';
+import NotificacionesBell from '../Notificaciones/NotificacionesBell';
 
 const Header = ({ onLogout, cargando }) => {
     const { rol, usuario } = useAuth();
@@ -55,14 +56,18 @@ const Header = ({ onLogout, cargando }) => {
                         Evidencias
                     </NavLink>
                 )}
+
+                {(rol === 'ROLE_ADMIN' || rol === 'ROLE_SISTEMA' || rol === 'ROLE_CIUDADANO') && (
+                    <NavLink to="/admin/comentarios" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
+                        Comentarios
+                    </NavLink>
+                )}
+
             </nav>
 
             {/* --- SECCIÓN DERECHA --- */}
             <div className={styles.actionSection}>
-                <button className={styles.notificationBtn}>
-                    <i className="bi bi-bell"></i>
-                    <span className={styles.badge}>3</span>
-                </button>
+                <NotificacionesBell />
 
                 <div
                     className={styles.userProfileContainer}

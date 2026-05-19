@@ -20,6 +20,7 @@ import Puestos from '../components/GestionInstitucional/Puestos';
 import Personal from '../components/GestionInstitucional/Personal';
 import Cuadrillas from '../components/GestionInstitucional/Cuadrillas';
 import Evidencias from '../components/Evidencias/Evidencias';
+import Comentarios from '../components/Comentarios/Comentarios';
 
 const AppRouter = () => {
     return (
@@ -106,6 +107,12 @@ const AppRouter = () => {
                 <Route path="/admin/evidencias" element={
                     <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA']}>
                         <Evidencias />
+                    </RoleGuard>
+                } />
+
+                <Route path="/admin/comentarios" element={
+                    <RoleGuard rolesPermitidos={['ROLE_ADMIN', 'ROLE_SISTEMA', 'ROLE_CIUDADANO']}>
+                        <Comentarios/>
                     </RoleGuard>
                 } />
 
