@@ -6,24 +6,20 @@ import styles from './Chat.module.css';
  * Formatea una fecha recibida del backend (ISO string)
  * convertida a la zona horaria local del navegador.
  */
+
 export const formatFechaLocal = (fechaISO) => {
     if (!fechaISO) return '';
-
     try {
-        const fecha = new Date(fechaISO);
-
-        // DEBUG: log raw data
-        console.log("DEBUG formatFechaLocal - entrada:", fechaISO, "- fecha JS:", fecha.toISOString());
-
-        // Usa getFullYear, getMonth, getDate (zona local del navegador)
-        const ano = fecha.getFullYear();
-        const mes = String(fecha.getMonth() + 1).padStart(2, '0');
-        const dia = String(fecha.getDate()).padStart(2, '0');
-        const hora = String(fecha.getHours()).padStart(2, '0');
-        const minuto = String(fecha.getMinutes()).padStart(2, '0');
-        const segundo = String(fecha.getSeconds()).padStart(2, '0');
-
-        return `${dia}/${mes}/${ano} ${hora}:${minuto}:${segundo}`;
+        // Formato DD/MM/YYYY HH:mm:ss en hora centro de México
+        return new Date(fechaISO).toLocaleString('es-MX', {
+            timeZone: 'America/Mexico_City',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+        });
     } catch (error) {
         console.error('Error al formatear fecha:', error);
         return '';
@@ -34,20 +30,18 @@ export const formatFechaLocal = (fechaISO) => {
  * Formatea solo la hora (HH:mm:ss AM/PM) desde una fecha ISO
  * en la zona horaria local del navegador
  */
+
 export const formatHoraLocal = (fechaISO) => {
     if (!fechaISO) return '';
-
     try {
-        const fecha = new Date(fechaISO);
-        const horas = fecha.getHours();
-        const minutos = String(fecha.getMinutes()).padStart(2, '0');
-        const segundos = String(fecha.getSeconds()).padStart(2, '0');
-
-        // Convertir a formato 12h con AM/PM
-        const horas12 = horas % 12 || 12;
-        const ampm = horas >= 12 ? 'PM' : 'AM';
-
-        return `${String(horas12).padStart(2, '0')}:${minutos}:${segundos} ${ampm}`;
+        // Formato 12h con AM/PM en hora centro de México
+        return new Date(fechaISO).toLocaleTimeString('es-MX', {
+            timeZone: 'America/Mexico_City',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        });
     } catch (error) {
         console.error('Error al formatear hora:', error);
         return '';

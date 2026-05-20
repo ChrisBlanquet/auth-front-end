@@ -80,10 +80,19 @@ const ChatIncidencia = ({ incidencia, onClose }) => {
 
   const handleEnviar = async (textoComentario) => {
     try {
-      const esCiudadano = rol === "CIUDADANO" || rol === "ROLE_CIUDADANO";
-      const usuarioDestinoId = esCiudadano
-        ? incidencia.personalId
-        : incidencia.usuarioId;
+      // Buscar el otro usuario en el chat (distinto al actual)
+      let usuarioDestinoId = null;
+      const otroComentario = comentarios.find(
+        (c) => Number(c.usuarioId) !== Number(usuario.id)
+      );
+      if (otroComentario) {
+        usuarioDestinoId = otroComentario.usuarioId;
+      } else {
+        // Si no hay otro comentario, usar el dueño de la incidencia si no es el actual
+        usuarioDestinoId = Number(incidencia.usuarioId) !== Number(usuario.id)
+          ? incidencia.usuarioId
+          : null;
+      }
 
       const nuevoComentario = {
         incidenciaId: incidencia.id,
@@ -92,10 +101,13 @@ const ChatIncidencia = ({ incidencia, onClose }) => {
         mensaje: textoComentario,
       };
 
-      // Debug extra solicitado
-      console.log("DESTINO:", nuevoComentario.usuarioDestinoId);
-      console.log("personalId:", incidencia.personalId);
-      console.log("usuarioId dueño:", incidencia.usuarioId);
+
+      // Debug para verificar el destino (siempre visible)
+      if (usuarioDestinoId === null) {
+        console.warn("[ChatIncidencia] usuarioDestinoId es null. No se enviará el comentario.");
+      } else {
+        console.log("[ChatIncidencia] DESTINO:", usuarioDestinoId, "usuarioId dueño:", incidencia.usuarioId);
+      }
 
       const res = await postComentario(nuevoComentario);
       const creado = res?.data || res;
