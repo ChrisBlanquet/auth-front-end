@@ -78,16 +78,28 @@ const ChatIncidencia = ({ incidencia, onClose }) => {
     }
   }, [comentarios]);
 
-  const handleEnviar = async (mensaje) => {
+  const handleEnviar = async (textoComentario) => {
     try {
-      const payload = {
-        incidenciaId: Number(incidencia.id),
-        usuarioId: Number(usuario.id),
-        mensaje: mensaje,
+      const esCiudadano = rol === "CIUDADANO" || rol === "ROLE_CIUDADANO";
+      const usuarioDestinoId = esCiudadano
+        ? incidencia.personalId
+        : incidencia.usuarioId;
+
+      const nuevoComentario = {
+        incidenciaId: incidencia.id,
+        usuarioId: usuario.id,
+        usuarioDestinoId,
+        mensaje: textoComentario,
       };
 
-      const res = await postComentario(payload);
+      // Debug extra solicitado
+      console.log("DESTINO:", nuevoComentario.usuarioDestinoId);
+      console.log("personalId:", incidencia.personalId);
+      console.log("usuarioId dueño:", incidencia.usuarioId);
+
+      const res = await postComentario(nuevoComentario);
       const creado = res?.data || res;
+
       if (creado && creado.id) {
         setComentarios((prev) => [...prev, creado]);
       } else {
