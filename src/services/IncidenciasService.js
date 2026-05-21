@@ -132,5 +132,15 @@ export const IncidenciasService = {
       console.error("Error al eliminar incidencia:", error);
       throw error;
     }
+  },
+  
+obtenerClimaUbicacion: async (ubicacionId) => {
+    try {
+      const response = await api.get(`/incidencias/clima/${ubicacionId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error al obtener el clima:", error);
+      return null;
+    }
   }
 };

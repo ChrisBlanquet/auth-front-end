@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { IncidenciasService } from "../../services/IncidenciasService";
 import { useAuth } from "../../context/AuthContext";
 import styles from '../CrearIncidencia/Formulario.module.css';
+import WidgetClima from '../Incidencias/WidgetClima';
 
 const AsignarResponsable = () => {
   const { usuario } = useAuth(); // Obtenemos el usuario autenticado (para sacar su ID)
@@ -146,6 +147,10 @@ const AsignarResponsable = () => {
               )}
             </select>
           </div>
+
+          {seleccion.incidenciaId && incidenciaSeleccionada?.ubicacionId && (
+            <WidgetClima ubicacionId={incidenciaSeleccionada.ubicacionId} />
+          )}
 
           {incidenciaSeleccionada?.alertaClima && (
             <div style={{
